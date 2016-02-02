@@ -1,7 +1,7 @@
 package javaProject.catalogComics;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 
@@ -29,7 +29,7 @@ public class PeopleTest {
     public void modify() throws PeopleNotFoundException {
 	People people = PeopleCatalog.getInstance().find(1);
 	people.setFirstName("Paul");
-	PeopleCatalog.update(people);
+	PeopleCatalog.getInstance().update(people);
 	assertEquals("Paul", PeopleCatalog.getInstance().find(1).getFirstName());
     }
 
@@ -41,7 +41,7 @@ public class PeopleTest {
 
     @Test
     public void delete() throws PeopleNotFoundException {
-	assertTrue(PeopleCatalog.delete(1));
+	fail("Not implemented yet");
     }
 
     @Test

@@ -23,12 +23,12 @@ public class Comic {
 	this.copies = copies;
     }
 
-    public int getId() {
+    public int getIsbn() {
 	return ISBN;
     }
 
-    public void setId(int id) {
-	this.ISBN = id;
+    public void setIsbn(int ISBN) {
+	this.ISBN = ISBN;
     }
 
     public String getTitle() {
@@ -61,6 +61,11 @@ public class Comic {
 
     public void setCopies(List<Copy> copies) {
 	this.copies = copies;
+    }
+
+    @Override
+    public String toString() {
+	return "ISBN: " + ISBN + ", Title: " + title + ", Description: " + description;
     }
 
 }

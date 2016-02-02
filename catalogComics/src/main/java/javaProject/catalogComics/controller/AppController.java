@@ -1,51 +1,36 @@
 package javaProject.catalogComics.controller;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import javaProject.catalogComics.catalog.ComicCatalog;
-import javaProject.catalogComics.catalog.PeopleCatalog;
 import javaProject.catalogComics.exception.PeopleNotFoundException;
 import javaProject.catalogComics.model.People;
 import javaProject.catalogComics.util.Resource;
 
 public class AppController {
 
+    private List<String> menu = new ArrayList<String>();
+
     public AppController() {
 	Resource.init();
-	this.displayGuessMenu();
-
-    }
-
-    public void displayGuessMenu() {
+	menu = new GuessContoller().displayMenu();
 	int option;
 	do {
-	    System.out.println("Welcome to Sheldon Cooper's collection of Comics");
-	    System.out.println("---------------------Menu-----------------------");
-	    System.out.println("1- View collection of comics");
-	    System.out.println("2- Login");
-	    System.out.println("3- Exit");
-	    System.out.print("Option: ");
-
+	    this.displayMenuOption();
 	    Scanner scanner = new Scanner(System.in);
 	    option = scanner.nextInt();
 
 	    switch (option) {
 	    case 1:
-		this.displayCollectionComics();
+		ComicCatalog.getInstance().findAll().forEach(copy -> System.out.println(copy.toString()));
+		System.out.println("Press enter to return to main menu.");
 		break;
 
 	    case 2:
-		try {
-		    try {
-			this.login();
-		    } catch (NoSuchAlgorithmException e) {
-			System.out.println("An error occurred.\n");
-		    }
-
-		} catch (PeopleNotFoundException e) {
-		    System.out.println(e.getMessage() + "\n");
-		}
+		this.login();
 		break;
 
 	    case 3:
@@ -60,21 +45,19 @@ public class AppController {
 	} while (option != 3);
     }
 
-    private void displayCollectionComics() {
-	// Pending - Need refactor after CRUD Comic
-	ComicCatalog.getInstance().loadComics();
-
+    private void displayMenuOption() {
+	menu.forEach(itemMenu -> System.out.println(itemMenu));
     }
 
-    private void login() throws NoSuchAlgorithmException, PeopleNotFoundException {
-	Scanner scanner = new Scanner(System.in);
-	System.out.println("---------------------Login-----------------------");
-	System.out.print("Username: ");
-	String username = scanner.next();
-	System.out.print("Password: ");
-	String password = scanner.next();
-	People people = PeopleCatalog.getInstance().findBy(username, password);
-	people.displayMenu();
+    private void login() {
+	try {
+	    People people = new LoginController().login();
+	    new MenuFactory().displayUserMenu(people);
+	} catch (NoSuchAlgorithmException e) {
+	    System.out.println("An error occurred.\n");
+	} catch (PeopleNotFoundException e) {
+	    System.out.println(e.getMessage() + "\n");
+	}
     }
 
 }

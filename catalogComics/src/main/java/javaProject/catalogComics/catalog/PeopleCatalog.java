@@ -1,12 +1,11 @@
 package javaProject.catalogComics.catalog;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import javaProject.catalogComics.exception.PeopleNotFoundException;
 import javaProject.catalogComics.model.People;
-import javaProject.catalogComics.util.Encryption;
 
 public class PeopleCatalog {
 
@@ -29,8 +28,7 @@ public class PeopleCatalog {
 	return ++counter;
     }
 
-    public People findBy(String username, String password) throws NoSuchAlgorithmException, PeopleNotFoundException {
-	password = Encryption.encrypted(password);
+    public People findBy(String username, String password) throws PeopleNotFoundException {
 	boolean userValid;
 	for (People people : peoples) {
 	    userValid = people.getUsername().equals(username) && people.getPassword().equals(password);
@@ -60,22 +58,17 @@ public class PeopleCatalog {
 	throw new PeopleNotFoundException("People not found.");
     }
 
-    public static void update(People peopleToUptade) {
-	for (People people : PeopleCatalog.getInstance().findAll()) {
-	    if (people.getId() == peopleToUptade.getId()) {
-		PeopleCatalog.getInstance().findAll().remove(people);
-		PeopleCatalog.getInstance().findAll().add(people);
-	    }
-	}
+    public void update(People peopleToUptade) {
+	PeopleCatalog.getInstance().findAll().removeIf(condition(peopleToUptade.getId()));
+	PeopleCatalog.getInstance().findAll().add(peopleToUptade);
     }
 
-    public static boolean delete(int id) throws PeopleNotFoundException {
-	for (People people : PeopleCatalog.getInstance().findAll()) {
-	    if (people.getId() == id) {
-		return PeopleCatalog.getInstance().findAll().remove(people);
-	    }
-	}
-	throw new PeopleNotFoundException("People not found.");
+    public void delete(int id) throws PeopleNotFoundException {
+	PeopleCatalog.getInstance().findAll().removeIf(condition(id));
+    }
+
+    private Predicate<? super People> condition(int id) {
+	return element -> element.getId() == id;
     }
 
 }

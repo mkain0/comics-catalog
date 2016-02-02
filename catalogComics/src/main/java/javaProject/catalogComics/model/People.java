@@ -2,8 +2,6 @@ package javaProject.catalogComics.model;
 
 public interface People {
 
-    void displayMenu();
-
     int getId();
 
     void setId(int id);

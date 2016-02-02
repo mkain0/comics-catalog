@@ -74,12 +74,6 @@ public class User implements People {
     }
 
     @Override
-    public void displayMenu() {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
     public String toString() {
 	return "Id: " + id + ", Username: " + username + ", Last Name: " + lastName + ", First Name: " + firstName;
     }

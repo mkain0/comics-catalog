@@ -1,6 +1,7 @@
 package javaProject.catalogComics.catalog;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javaProject.catalogComics.model.Copy;
@@ -21,8 +22,18 @@ public class ComicCatalog {
 	return uniqueInstance;
     }
 
-    public List<Copy> loadComics() {
+    public List<Copy> findAll() {
 	return comicsCopies;
+    }
+
+    public void delete(int ISBN) {
+	Iterator<Copy> iCopies = this.comicsCopies.iterator();
+	while (iCopies.hasNext()) {
+	    Copy copy = iCopies.next();
+	    if (copy.getComic().getIsbn() == ISBN) {
+		iCopies.remove();
+	    }
+	}
     }
 
 }
