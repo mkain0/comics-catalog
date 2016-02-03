@@ -1,15 +1,16 @@
 package javaProject.catalogComics.catalog;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Predicate;
 
-import javaProject.catalogComics.model.Copy;
+import javaProject.catalogComics.exception.NotFoundException;
+import javaProject.catalogComics.model.Comic;
 
 public class ComicCatalog {
 
     private static ComicCatalog uniqueInstance;
-    private List<Copy> comicsCopies = new ArrayList<>();
+    private Set<Comic> comics = new HashSet<>();
 
     private ComicCatalog() {
 
@@ -22,19 +23,33 @@ public class ComicCatalog {
 	return uniqueInstance;
     }
 
-    public List<Copy> findAll() {
-	return comicsCopies;
+    public Set<Comic> findAll() {
+	return comics;
     }
 
-    public void add(Copy copy) {
-	ComicCatalog.getInstance().findAll().add(copy);
+    public void save(Comic comic) {
+	ComicCatalog.getInstance().findAll().add(comic);
+    }
+
+    public void update(Comic comicToUptade) {
+	ComicCatalog.getInstance().findAll().removeIf(condition(comicToUptade.getIsbn()));
+	ComicCatalog.getInstance().findAll().add(comicToUptade);
+    }
+
+    public Comic findBy(int ISBN) throws NotFoundException {
+	for (Comic comic : comics) {
+	    if (comic.getIsbn() == ISBN) {
+		return comic;
+	    }
+	}
+	throw new NotFoundException("Comic not found.");
     }
 
     public void delete(int ISBN) {
 	ComicCatalog.getInstance().findAll().removeIf(condition(ISBN));
     }
 
-    private Predicate<? super Copy> condition(int ISBN) {
-	return element -> element.getComic().getIsbn() == ISBN;
+    private Predicate<? super Comic> condition(int ISBN) {
+	return element -> element.getIsbn() == ISBN;
     }
 }

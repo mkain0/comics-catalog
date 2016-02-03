@@ -9,7 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import javaProject.catalogComics.catalog.PeopleCatalog;
-import javaProject.catalogComics.exception.PeopleNotFoundException;
+import javaProject.catalogComics.exception.NotFoundException;
 import javaProject.catalogComics.model.Admin;
 import javaProject.catalogComics.model.People;
 
@@ -26,21 +26,21 @@ public class PeopleTest {
     }
 
     @Test
-    public void modify() throws PeopleNotFoundException {
-	People people = PeopleCatalog.getInstance().find(1);
+    public void modify() throws NotFoundException {
+	People people = PeopleCatalog.getInstance().findBy(1);
 	people.setFirstName("Paul");
 	PeopleCatalog.getInstance().update(people);
-	assertEquals("Paul", PeopleCatalog.getInstance().find(1).getFirstName());
+	assertEquals("Paul", PeopleCatalog.getInstance().findBy(1).getFirstName());
     }
 
-    @Test(expected = PeopleNotFoundException.class)
-    public void peopleNotFoundException() throws PeopleNotFoundException {
-	People people = PeopleCatalog.getInstance().find(2);
+    @Test(expected = NotFoundException.class)
+    public void peopleNotFoundException() throws NotFoundException {
+	People people = PeopleCatalog.getInstance().findBy(2);
 	assertEquals(2, people.getId());
     }
 
     @Test
-    public void delete() throws PeopleNotFoundException {
+    public void delete() throws NotFoundException {
 	fail("Not implemented yet");
     }
 

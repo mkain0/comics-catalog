@@ -15,12 +15,11 @@ public class Comic {
 
     }
 
-    public Comic(int ISBN, String title, String description, Genre genre, List<Copy> copies) {
+    public Comic(int ISBN, String title, String description, Genre genre) {
 	this.ISBN = ISBN;
 	this.title = title;
 	this.description = description;
 	this.genre = genre;
-	this.copies = copies;
     }
 
     public int getIsbn() {

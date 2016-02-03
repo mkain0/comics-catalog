@@ -6,6 +6,9 @@ public class CrudMenuFactory {
 	if (option == 1) {
 	    return new ComicController();
 	}
+	if (option == 2) {
+	    return new GenreController();
+	}
 	return new UserController();
     }
 

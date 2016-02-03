@@ -4,7 +4,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
 import javaProject.catalogComics.catalog.PeopleCatalog;
-import javaProject.catalogComics.exception.PeopleNotFoundException;
+import javaProject.catalogComics.exception.NotFoundException;
 import javaProject.catalogComics.model.People;
 import javaProject.catalogComics.model.User;
 import javaProject.catalogComics.util.Encryption;
@@ -37,7 +37,7 @@ public class UserController implements CrudController {
 	}
     }
 
-    private int save(User user) throws NoSuchAlgorithmException {
+    public int save(User user) throws NoSuchAlgorithmException {
 	user.setPassword(Encryption.encrypted(user.getPassword()));
 	return PeopleCatalog.getInstance().save(user);
     }
@@ -61,17 +61,17 @@ public class UserController implements CrudController {
 	    people.setPassword(scanner.nextLine());
 
 	    this.update(people);
-	} catch (PeopleNotFoundException e) {
+	} catch (NotFoundException e) {
 	    System.out.println(e.getMessage());
 	}
     }
 
-    private void update(People people) {
+    public void update(People people) {
 	PeopleCatalog.getInstance().update(people);
     }
 
-    public People findBy(int id) throws PeopleNotFoundException {
-	return PeopleCatalog.getInstance().find(id);
+    public People findBy(int id) throws NotFoundException {
+	return PeopleCatalog.getInstance().findBy(id);
     }
 
     @Override

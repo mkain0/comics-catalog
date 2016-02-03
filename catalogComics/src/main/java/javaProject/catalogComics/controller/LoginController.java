@@ -4,7 +4,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
 import javaProject.catalogComics.catalog.PeopleCatalog;
-import javaProject.catalogComics.exception.PeopleNotFoundException;
+import javaProject.catalogComics.exception.NotFoundException;
 import javaProject.catalogComics.model.People;
 import javaProject.catalogComics.util.Encryption;
 
@@ -16,12 +16,12 @@ public class LoginController {
 	    new UserMenuFactory().displayUserMenu(people);
 	} catch (NoSuchAlgorithmException e) {
 	    System.out.println("An error occurred.\n");
-	} catch (PeopleNotFoundException e) {
+	} catch (NotFoundException e) {
 	    System.out.println(e.getMessage() + "\n");
 	}
     }
 
-    public People login() throws NoSuchAlgorithmException, PeopleNotFoundException {
+    public People login() throws NoSuchAlgorithmException, NotFoundException {
 	Scanner scanner = new Scanner(System.in);
 	System.out.println("---------------------Login-----------------------");
 	System.out.print("Username: ");

@@ -28,8 +28,9 @@ public class UserMenuFactory {
 	List<String> menu = new ArrayList<String>();
 	menu.add("----------------Admin Dashboard-----------------");
 	menu.add("1- Collection of Comics");
-	menu.add("2- Users Panel");
-	menu.add("3- Exit");
+	menu.add("2- Genres");
+	menu.add("3- Users Panel");
+	menu.add("4- Exit");
 	menu.add("Option: ");
 	int option;
 	do {
@@ -40,19 +41,19 @@ public class UserMenuFactory {
 	    switch (option) {
 	    case 1:
 	    case 2:
+	    case 3:
 		this.createCrudMenu(option);
 		break;
 
-	    case 3:
+	    case 4:
 		System.out.println("Goodbye.");
-		System.exit(0);
 		break;
 
 	    default:
 		System.out.println("Wrong option, try again.");
 		break;
 	    }
-	} while (option != 3);
+	} while (option != 4);
     }
 
     private void createCrudMenu(int type) {

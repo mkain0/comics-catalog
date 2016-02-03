@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import javaProject.catalogComics.exception.PeopleNotFoundException;
+import javaProject.catalogComics.exception.NotFoundException;
 import javaProject.catalogComics.model.People;
 
 public class PeopleCatalog {
@@ -28,7 +28,7 @@ public class PeopleCatalog {
 	return ++counter;
     }
 
-    public People findBy(String username, String password) throws PeopleNotFoundException {
+    public People findBy(String username, String password) throws NotFoundException {
 	boolean userValid;
 	for (People people : peoples) {
 	    userValid = people.getUsername().equals(username) && people.getPassword().equals(password);
@@ -36,7 +36,7 @@ public class PeopleCatalog {
 		return people;
 	    }
 	}
-	throw new PeopleNotFoundException("The username or password is incorrect.");
+	throw new NotFoundException("The username or password is incorrect.");
     }
 
     public Set<People> findAll() {
@@ -49,13 +49,13 @@ public class PeopleCatalog {
 	return people.getId();
     }
 
-    public People find(int id) throws PeopleNotFoundException {
+    public People findBy(int id) throws NotFoundException {
 	for (People people : peoples) {
 	    if (people.getId() == id) {
 		return people;
 	    }
 	}
-	throw new PeopleNotFoundException("People not found.");
+	throw new NotFoundException("People not found.");
     }
 
     public void update(People peopleToUptade) {

@@ -29,4 +29,9 @@ public class Genre {
 	this.description = description;
     }
 
+    @Override
+    public String toString() {
+	return "Genre ID: " + id + ", Description: " + description;
+    }
+
 }
