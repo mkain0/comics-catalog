@@ -64,7 +64,8 @@ public class Comic {
 
     @Override
     public String toString() {
-	return "ISBN: " + ISBN + ", Title: " + title + ", Description: " + description;
+	return "ISBN: " + ISBN + ", Title: " + title + ", Description: " + description + ", Genre: "
+		+ genre.getDescription();
     }
 
 }

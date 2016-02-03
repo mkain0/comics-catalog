@@ -1,9 +1,9 @@
-package javaProject.catalogComics.controller;
+package javaProject.catalogComics.view;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuessContoller {
+public class GuessView {
 
     public List<String> displayMenu() {
 	List<String> menu = new ArrayList<String>();

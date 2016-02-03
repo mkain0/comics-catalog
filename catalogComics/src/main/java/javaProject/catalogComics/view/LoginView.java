@@ -1,16 +1,15 @@
-package javaProject.catalogComics.controller;
+package javaProject.catalogComics.view;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
-import javaProject.catalogComics.catalog.PeopleCatalog;
 import javaProject.catalogComics.exception.NotFoundException;
 import javaProject.catalogComics.model.People;
-import javaProject.catalogComics.util.Encryption;
+import javaProject.catalogComics.service.PeopleService;
 
-public class LoginController {
+public class LoginView {
 
-    public LoginController() {
+    public LoginView() {
 	try {
 	    People people = this.login();
 	    new UserMenuFactory().displayUserMenu(people);
@@ -28,7 +27,7 @@ public class LoginController {
 	String username = scanner.next();
 	System.out.print("Password: ");
 	String password = scanner.next();
-	return PeopleCatalog.getInstance().findBy(username, Encryption.encrypted(password));
+	return new PeopleService().login(username, password);
     }
 
 }

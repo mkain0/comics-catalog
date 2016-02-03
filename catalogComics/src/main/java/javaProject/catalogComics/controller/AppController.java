@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import javaProject.catalogComics.catalog.ComicCatalog;
+import javaProject.catalogComics.service.ComicService;
 import javaProject.catalogComics.util.Resource;
+import javaProject.catalogComics.view.GuessView;
+import javaProject.catalogComics.view.LoginView;
 
 public class AppController {
 
@@ -13,21 +15,21 @@ public class AppController {
 
     public AppController() {
 	Resource.init();
-	menu = new GuessContoller().displayMenu();
+	menu = new GuessView().displayMenu();
 	int option;
 	do {
-	    this.displayMenuOption();
+	    menu.forEach(itemMenu -> System.out.println(itemMenu));
 	    Scanner scanner = new Scanner(System.in);
 	    option = scanner.nextInt();
 
 	    switch (option) {
 	    case 1:
-		ComicCatalog.getInstance().findAll().forEach(copy -> System.out.println(copy.toString()));
+		new ComicService().findComics();
 		System.out.println("Press enter to return to main menu.");
 		break;
 
 	    case 2:
-		new LoginController();
+		new LoginView();
 		break;
 
 	    case 3:
@@ -40,10 +42,6 @@ public class AppController {
 		break;
 	    }
 	} while (option != 3);
-    }
-
-    private void displayMenuOption() {
-	menu.forEach(itemMenu -> System.out.println(itemMenu));
     }
 
 }

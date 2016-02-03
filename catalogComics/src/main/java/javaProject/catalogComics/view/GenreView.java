@@ -1,12 +1,14 @@
-package javaProject.catalogComics.controller;
+package javaProject.catalogComics.view;
 
 import java.util.Scanner;
 
-import javaProject.catalogComics.catalog.GenreCatalog;
 import javaProject.catalogComics.exception.NotFoundException;
 import javaProject.catalogComics.model.Genre;
+import javaProject.catalogComics.service.ComicService;
 
-public class GenreController implements CrudController {
+public class GenreView implements CrudViewTemplate {
+
+    private ComicService comicService = new ComicService();
 
     @Override
     public String getTitle() {
@@ -20,12 +22,8 @@ public class GenreController implements CrudController {
 	System.out.println("Description: ");
 	String description = scanner.nextLine();
 
-	int id = this.save(new Genre(description));
+	int id = comicService.saveGenre(new Genre(description));
 	System.out.println("Registered Successfully. Genre ID: " + id);
-    }
-
-    public int save(Genre genre) {
-	return GenreCatalog.getInstance().save(genre);
     }
 
     @Override
@@ -36,22 +34,14 @@ public class GenreController implements CrudController {
 	int id = scanner.nextInt();
 	Genre genre;
 	try {
-	    genre = this.findBy(id);
+	    genre = comicService.findGenreBy(id);
 	    System.out.println("Description: ");
 	    genre.setDescription(scanner.nextLine());
 
-	    this.update(genre);
+	    comicService.updateGenre(genre);
 	} catch (NotFoundException e) {
 	    System.out.println(e.getMessage());
 	}
-    }
-
-    public void update(Genre genre) {
-	GenreCatalog.getInstance().update(genre);
-    }
-
-    public Genre findBy(int id) throws NotFoundException {
-	return GenreCatalog.getInstance().findBy(id);
     }
 
     @Override
@@ -60,13 +50,12 @@ public class GenreController implements CrudController {
 	System.out.println("------------------Delete Genre-------------------");
 	System.out.println("Genre ID: ");
 	int id = scanner.nextInt();
-	// TODO Validate if there are comics with that genre.
-	GenreCatalog.getInstance().delete(id);
+	comicService.deleteGenre(id);
     }
 
     @Override
     public void viewAll() {
-	GenreCatalog.getInstance().findAll().forEach(genre -> System.out.println(genre.toString()));
+	comicService.findGenres().forEach(genre -> System.out.println(genre.toString()));
     }
 
 }

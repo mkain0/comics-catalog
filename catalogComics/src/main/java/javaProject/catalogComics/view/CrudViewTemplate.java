@@ -1,9 +1,9 @@
-package javaProject.catalogComics.controller;
+package javaProject.catalogComics.view;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public interface CrudController {
+public interface CrudViewTemplate {
 
     default List<String> getMenu() {
 	List<String> menu = new ArrayList<String>();

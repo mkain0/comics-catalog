@@ -1,4 +1,4 @@
-package javaProject.catalogComics.controller;
+package javaProject.catalogComics.view;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import javaProject.catalogComics.model.People;
 import javaProject.catalogComics.model.User;
+import javaProject.catalogComics.service.ComicService;
 
 public class UserMenuFactory {
 
@@ -17,11 +18,37 @@ public class UserMenuFactory {
     }
 
     private void userMenu() {
-	System.out.println("-------------------User Menu--------------------");
-	System.out.println("1- View collection of comics");
-	System.out.println("2- Loan");
-	System.out.println("3- Exit");
-	System.out.println("Option: ");
+	List<String> menu = new ArrayList<String>();
+	menu.add("-------------------User Menu--------------------");
+	menu.add("1- View collection of comics");
+	menu.add("2- Loan");
+	menu.add("3- Exit");
+	menu.add("Option: ");
+	int option;
+	do {
+	    menu.forEach(itemMenu -> System.out.println(itemMenu));
+	    Scanner scanner = new Scanner(System.in);
+	    option = scanner.nextInt();
+
+	    switch (option) {
+	    case 1:
+		new ComicService().findComics().forEach(comic -> System.out.println(comic.toString()));
+		System.out.println("Press enter to return to main menu.");
+		break;
+
+	    case 2:
+		new LoanView().loan();
+		break;
+
+	    case 3:
+		System.out.println("Goodbye.");
+		break;
+
+	    default:
+		System.out.println("Wrong option, try again.");
+		break;
+	    }
+	} while (option != 3);
     }
 
     private void adminMenu() {
@@ -57,7 +84,7 @@ public class UserMenuFactory {
     }
 
     private void createCrudMenu(int type) {
-	CrudController crudController = new CrudMenuFactory().displayCrudMenu(type);
+	CrudViewTemplate crudController = new CrudMenuFactory().displayCrudMenu(type);
 	List<String> menu = new ArrayList<String>();
 	menu.add(crudController.getTitle());
 	menu.addAll(crudController.getMenu());

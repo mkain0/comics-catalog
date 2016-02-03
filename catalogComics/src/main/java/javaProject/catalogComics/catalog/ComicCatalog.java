@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 import javaProject.catalogComics.exception.NotFoundException;
 import javaProject.catalogComics.model.Comic;
+import javaProject.catalogComics.util.CopyStatus;
 
 public class ComicCatalog {
 
@@ -51,5 +52,12 @@ public class ComicCatalog {
 
     private Predicate<? super Comic> condition(int ISBN) {
 	return element -> element.getIsbn() == ISBN;
+    }
+
+    public Set<Comic> findAvailable() {
+	for (Comic comic : comics) {
+	    comic.getCopies().stream().filter(copy -> copy.getStatus().equals(CopyStatus.AVAILABLE));
+	}
+	return null;
     }
 }
