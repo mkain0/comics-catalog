@@ -1,13 +1,10 @@
 package javaProject.catalogComics.controller;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import javaProject.catalogComics.catalog.ComicCatalog;
-import javaProject.catalogComics.exception.PeopleNotFoundException;
-import javaProject.catalogComics.model.People;
 import javaProject.catalogComics.util.Resource;
 
 public class AppController {
@@ -30,7 +27,7 @@ public class AppController {
 		break;
 
 	    case 2:
-		this.login();
+		new LoginController();
 		break;
 
 	    case 3:
@@ -47,17 +44,6 @@ public class AppController {
 
     private void displayMenuOption() {
 	menu.forEach(itemMenu -> System.out.println(itemMenu));
-    }
-
-    private void login() {
-	try {
-	    People people = new LoginController().login();
-	    new MenuFactory().displayUserMenu(people);
-	} catch (NoSuchAlgorithmException e) {
-	    System.out.println("An error occurred.\n");
-	} catch (PeopleNotFoundException e) {
-	    System.out.println(e.getMessage() + "\n");
-	}
     }
 
 }

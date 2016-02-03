@@ -43,7 +43,7 @@ public class PeopleCatalog {
 	return peoples;
     }
 
-    public static int add(People people) {
+    public int save(People people) {
 	people.setId(PeopleCatalog.getNext());
 	PeopleCatalog.getInstance().findAll().add(people);
 	return people.getId();
@@ -63,7 +63,7 @@ public class PeopleCatalog {
 	PeopleCatalog.getInstance().findAll().add(peopleToUptade);
     }
 
-    public void delete(int id) throws PeopleNotFoundException {
+    public void delete(int id) {
 	PeopleCatalog.getInstance().findAll().removeIf(condition(id));
     }
 

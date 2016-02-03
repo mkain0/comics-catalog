@@ -1,8 +1,8 @@
 package javaProject.catalogComics.catalog;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
 
 import javaProject.catalogComics.model.Copy;
 
@@ -26,14 +26,15 @@ public class ComicCatalog {
 	return comicsCopies;
     }
 
-    public void delete(int ISBN) {
-	Iterator<Copy> iCopies = this.comicsCopies.iterator();
-	while (iCopies.hasNext()) {
-	    Copy copy = iCopies.next();
-	    if (copy.getComic().getIsbn() == ISBN) {
-		iCopies.remove();
-	    }
-	}
+    public void add(Copy copy) {
+	ComicCatalog.getInstance().findAll().add(copy);
     }
 
+    public void delete(int ISBN) {
+	ComicCatalog.getInstance().findAll().removeIf(condition(ISBN));
+    }
+
+    private Predicate<? super Copy> condition(int ISBN) {
+	return element -> element.getComic().getIsbn() == ISBN;
+    }
 }

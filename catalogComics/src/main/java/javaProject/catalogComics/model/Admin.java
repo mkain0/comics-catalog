@@ -73,4 +73,8 @@ public class Admin implements People {
 	this.firstName = firstName;
     }
 
+    @Override
+    public String toString() {
+	return "Id: " + id + ", Username: " + username + ", Last Name: " + lastName + ", First Name: " + firstName;
+    }
 }

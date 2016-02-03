@@ -17,12 +17,12 @@ public class PeopleTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-	PeopleCatalog.add(new Admin("Sheldon", "Bazinga", "Sheldon", "Cooper"));
+	PeopleCatalog.getInstance().save(new Admin("Sheldon", "Bazinga", "Sheldon", "Cooper"));
     }
 
     @Test
     public void register() {
-	assertEquals(1, PeopleCatalog.add(new Admin("Sheldon", "Bazinga", "Sheldon", "Cooper")));
+	assertEquals(1, PeopleCatalog.getInstance().save(new Admin("Sheldon", "Bazinga", "Sheldon", "Cooper")));
     }
 
     @Test

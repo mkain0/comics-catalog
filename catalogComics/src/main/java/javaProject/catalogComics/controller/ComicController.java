@@ -1,33 +1,47 @@
 package javaProject.catalogComics.controller;
 
-import java.util.Scanner;
+public class ComicController implements CrudController {
 
-import javaProject.catalogComics.catalog.ComicCatalog;
-import javaProject.catalogComics.model.Copy;
+    // public void viewAll() {
+    // for (Copy copy : ComicCatalog.getInstance().findAll()) {
+    // System.out.println(copy.toString());
+    // }
+    // }
+    //
+    // public void delete() {
+    // System.out.println("-----------------Delete Comic-------------------");
+    // System.out.print("ISBN: ");
+    // Scanner scanner = new Scanner(System.in);
+    // ComicCatalog.getInstance().delete(scanner.nextInt());
+    // }
 
-public class ComicController {
-
-    public void viewAll() {
-	for (Copy copy : ComicCatalog.getInstance().findAll()) {
-	    System.out.println(copy.toString());
-	}
+    @Override
+    public String getTitle() {
+	return "-------------Collection of Comics---------------";
     }
 
+    @Override
     public void register() {
 	// TODO Auto-generated method stub
 
     }
 
+    @Override
     public void modify() {
 	// TODO Auto-generated method stub
 
     }
 
+    @Override
     public void delete() {
-	System.out.println("-----------------Delete Comic-------------------");
-	System.out.print("ISBN: ");
-	Scanner scanner = new Scanner(System.in);
-	ComicCatalog.getInstance().delete(scanner.nextInt());
+	// TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void viewAll() {
+	// TODO Auto-generated method stub
+
     }
 
 }
