@@ -3,7 +3,9 @@ package javaProject.catalogComics.service;
 import java.security.NoSuchAlgorithmException;
 import java.util.Set;
 
+import javaProject.catalogComics.catalog.LoanCatalog;
 import javaProject.catalogComics.catalog.PeopleCatalog;
+import javaProject.catalogComics.exception.CanNotDeleteException;
 import javaProject.catalogComics.exception.NotFoundException;
 import javaProject.catalogComics.model.People;
 import javaProject.catalogComics.model.User;
@@ -32,8 +34,14 @@ public class PeopleService {
 	PeopleCatalog.getInstance().update(people);
     }
 
-    public void delete(int id) {
-	PeopleCatalog.getInstance().delete(id);
+    public void delete(int id) throws CanNotDeleteException {
+	boolean isPosibleDelete = LoanCatalog.getInstance().hasAnyPendingLoan(id);
+	if (isPosibleDelete) {
+	    PeopleCatalog.getInstance().delete(id);
+	} else {
+	    throw new CanNotDeleteException("Can not delete. User has pending loans.");
+	}
+
     }
 
 }

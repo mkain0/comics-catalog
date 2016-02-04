@@ -3,6 +3,7 @@ package javaProject.catalogComics.view;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import javaProject.catalogComics.exception.CanNotDeleteException;
 import javaProject.catalogComics.exception.NotFoundException;
 import javaProject.catalogComics.model.Genre;
 import javaProject.catalogComics.service.ComicService;
@@ -21,7 +22,6 @@ public class GenreView implements CrudViewTemplate {
 	System.out.println("------------------Create Genre------------------");
 	System.out.print("Description: ");
 	String description = new Scanner(System.in).next();
-
 	int id = comicService.saveGenre(new Genre(description));
 	System.out.println("Registered Successfully. Genre ID: " + id);
     }
@@ -37,7 +37,6 @@ public class GenreView implements CrudViewTemplate {
 	    genre = comicService.findGenreBy(id);
 	    System.out.print("Description: ");
 	    genre.setDescription(scanner.next());
-
 	    comicService.updateGenre(genre);
 	} catch (NotFoundException e) {
 	    System.out.println(e.getMessage());
@@ -49,7 +48,11 @@ public class GenreView implements CrudViewTemplate {
 	System.out.println("------------------Delete Genre-------------------");
 	System.out.print("Genre ID: ");
 	int id = new Scanner(System.in).nextInt();
-	comicService.deleteGenre(id);
+	try {
+	    comicService.deleteGenre(id);
+	} catch (CanNotDeleteException e) {
+	    System.out.println(e.getMessage());
+	}
     }
 
     @Override

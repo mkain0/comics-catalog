@@ -29,6 +29,9 @@ public class GenreCatalog {
     }
 
     public int save(Genre genre) {
+	if (genre == null) {
+	    throw new IllegalArgumentException();
+	}
 	genre.setId(GenreCatalog.getNext());
 	GenreCatalog.getInstance().findAll().add(genre);
 	return genre.getId();
@@ -44,6 +47,9 @@ public class GenreCatalog {
     }
 
     public void update(Genre genreToUptade) {
+	if (genreToUptade == null) {
+	    throw new IllegalArgumentException();
+	}
 	GenreCatalog.getInstance().findAll().removeIf(condition(genreToUptade.getId()));
 	GenreCatalog.getInstance().findAll().add(genreToUptade);
     }

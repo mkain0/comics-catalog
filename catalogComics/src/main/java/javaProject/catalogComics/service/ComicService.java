@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import javaProject.catalogComics.catalog.ComicCatalog;
 import javaProject.catalogComics.catalog.GenreCatalog;
+import javaProject.catalogComics.exception.CanNotDeleteException;
 import javaProject.catalogComics.exception.NotAvailableComicException;
 import javaProject.catalogComics.exception.NotFoundException;
 import javaProject.catalogComics.model.Comic;
@@ -48,8 +50,21 @@ public class ComicService {
 	ComicCatalog.getInstance().update(comic);
     }
 
-    public void deleteComic(int isbn) {
-	ComicCatalog.getInstance().delete(isbn);
+    public void deleteComic(int isbn) throws NotFoundException, CanNotDeleteException {
+	if (this.isPosibleDelete(isbn)) {
+	    ComicCatalog.getInstance().delete(isbn);
+	} else {
+	    throw new CanNotDeleteException("Can not comic because some copies are borrowed.");
+	}
+    }
+
+    private boolean isPosibleDelete(int isbn) throws NotFoundException {
+	for (Copy copy : ComicCatalog.getInstance().findBy(isbn).getCopies()) {
+	    if (copy.getStatus() == CopyStatus.BORROWED) {
+		return false;
+	    }
+	}
+	return true;
     }
 
     public int saveGenre(Genre genre) {
@@ -68,9 +83,25 @@ public class ComicService {
 	GenreCatalog.getInstance().update(genre);
     }
 
-    public void deleteGenre(int id) {
-	// TODO Validate if there are comics with that genre.
-	GenreCatalog.getInstance().delete(id);
+    public void deleteGenre(int id) throws CanNotDeleteException {
+	boolean isPosibleDelete = ComicCatalog.getInstance().findAll().stream().anyMatch(comic -> {
+	    if (comic.getGenre().getId() == id) {
+		return false;
+	    } else {
+		return true;
+	    }
+	});
+
+	if (isPosibleDelete) {
+	    GenreCatalog.getInstance().delete(id);
+	    ComicCatalog.getInstance().findAll().removeIf(removeComicsWithGenre(id));
+	} else {
+	    throw new CanNotDeleteException("Can not delete because some comics has this genre.");
+	}
+    }
+
+    private Predicate<? super Comic> removeComicsWithGenre(int id) {
+	return element -> element.getGenre().getId() == id;
     }
 
 }

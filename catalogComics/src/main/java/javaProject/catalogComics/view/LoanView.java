@@ -20,7 +20,7 @@ public class LoanView {
 	menu.add("-------------------Loan Menu--------------------");
 	menu.add("1- View loans");
 	menu.add("2- Close loan");
-	menu.add("3- Exit");
+	menu.add("3- Back");
 	menu.add("Option: ");
 	int option;
 	do {
@@ -59,9 +59,7 @@ public class LoanView {
 	    String username = scanner.next();
 	    loanService.loan(isbn, username);
 	    System.out.println("Registered Successfully.");
-	} catch (NotFoundException e) {
-	    System.out.println(e.getMessage());
-	} catch (NotAvailableComicException e) {
+	} catch (NotFoundException | NotAvailableComicException e) {
 	    System.out.println(e.getMessage());
 	}
     }

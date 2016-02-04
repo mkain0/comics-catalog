@@ -4,6 +4,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import javaProject.catalogComics.exception.CanNotDeleteException;
 import javaProject.catalogComics.exception.NotFoundException;
 import javaProject.catalogComics.model.People;
 import javaProject.catalogComics.model.User;
@@ -66,7 +67,11 @@ public class UserView implements CrudViewTemplate {
 	System.out.println("------------------Delete User-------------------");
 	System.out.print("User ID: ");
 	int id = new Scanner(System.in).nextInt();
-	peopleService.delete(id);
+	try {
+	    peopleService.delete(id);
+	} catch (CanNotDeleteException e) {
+	    System.out.println(e.getMessage());
+	}
     }
 
     @Override

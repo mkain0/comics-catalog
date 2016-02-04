@@ -28,10 +28,16 @@ public class LoanCatalog {
     }
 
     public void save(Loan loan) {
+	if (loan == null) {
+	    throw new IllegalArgumentException();
+	}
 	LoanCatalog.getInstance().findAll().add(loan);
     }
 
     public void update(Loan loanToUptade) {
+	if (loanToUptade == null) {
+	    throw new IllegalArgumentException();
+	}
 	LoanCatalog.getInstance().findAll().removeIf(condition(loanToUptade));
 	LoanCatalog.getInstance().findAll().add(loanToUptade);
     }
@@ -48,5 +54,15 @@ public class LoanCatalog {
 		return loan;
 	}
 	throw new NotFoundException("Loan not found.");
+    }
+
+    public boolean hasAnyPendingLoan(int id) {
+	return LoanCatalog.getInstance().findAll().stream().anyMatch(loan -> {
+	    if (loan.getReturned() == null) {
+		return false;
+	    } else {
+		return true;
+	    }
+	});
     }
 }

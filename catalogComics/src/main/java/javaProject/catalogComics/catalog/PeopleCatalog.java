@@ -53,6 +53,9 @@ public class PeopleCatalog {
     }
 
     public int save(People people) {
+	if (people == null) {
+	    throw new IllegalArgumentException();
+	}
 	people.setId(PeopleCatalog.getNext());
 	PeopleCatalog.getInstance().findAll().add(people);
 	return people.getId();
@@ -68,6 +71,9 @@ public class PeopleCatalog {
     }
 
     public void update(People peopleToUptade) {
+	if (peopleToUptade == null) {
+	    throw new IllegalArgumentException();
+	}
 	PeopleCatalog.getInstance().findAll().removeIf(condition(peopleToUptade.getId()));
 	PeopleCatalog.getInstance().findAll().add(peopleToUptade);
     }

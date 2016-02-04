@@ -3,6 +3,7 @@ package javaProject.catalogComics.view;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import javaProject.catalogComics.exception.CanNotDeleteException;
 import javaProject.catalogComics.exception.NotFoundException;
 import javaProject.catalogComics.model.Comic;
 import javaProject.catalogComics.model.Genre;
@@ -68,7 +69,11 @@ public class ComicView implements CrudViewTemplate {
 	System.out.println("------------------Delete Comic------------------");
 	System.out.print("ISBN: ");
 	int isbn = new Scanner(System.in).nextInt();
-	comicService.deleteComic(isbn);
+	try {
+	    comicService.deleteComic(isbn);
+	} catch (NotFoundException | CanNotDeleteException e) {
+	    System.out.println(e.getMessage());
+	}
     }
 
     @Override

@@ -33,10 +33,16 @@ public class ComicCatalog {
     }
 
     public void save(Comic comic) {
+	if (comic == null) {
+	    throw new IllegalArgumentException();
+	}
 	ComicCatalog.getInstance().findAll().add(comic);
     }
 
     public void update(Comic comicToUptade) {
+	if (comicToUptade == null) {
+	    throw new IllegalArgumentException();
+	}
 	ComicCatalog.getInstance().findAll().removeIf(condition(comicToUptade.getIsbn()));
 	ComicCatalog.getInstance().findAll().add(comicToUptade);
     }
