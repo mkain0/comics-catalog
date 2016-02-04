@@ -81,7 +81,7 @@ public class UserMenuFactory {
 		break;
 
 	    case 4:
-		new LoanView().close();
+		new LoanView().displayMenu();
 		break;
 
 	    case 5:

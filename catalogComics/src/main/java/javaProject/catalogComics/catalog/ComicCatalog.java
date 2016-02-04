@@ -62,11 +62,11 @@ public class ComicCatalog {
 	List<Comic> comicsAvailable = new ArrayList<>();
 	for (Comic comic : comics) {
 	    for (Copy copy : comic.getCopies()) {
-		if (copy.getStatus().equals(CopyStatus.AVAILABLE))
-		    ;
-		break;
+		if (copy.getStatus().equals(CopyStatus.AVAILABLE)) {
+		    comicsAvailable.add(comic);
+		    break;
+		}
 	    }
-	    comicsAvailable.add(comic);
 	}
 	Collections.sort(comicsAvailable, (c1, c2) -> c1.getTitle().compareTo(c2.getTitle()));
 	return comicsAvailable;

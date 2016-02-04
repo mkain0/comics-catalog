@@ -52,6 +52,12 @@ public class Loan {
     }
 
     @Override
+    public String toString() {
+	return "Pick Up: " + pickUp + ", Returned: " + returned + ", Reader: " + reader.getUsername() + ", Comic: "
+		+ comicCopy.getComic().getDescription();
+    }
+
+    @Override
     public boolean equals(Object obj) {
 	if (this == obj)
 	    return true;

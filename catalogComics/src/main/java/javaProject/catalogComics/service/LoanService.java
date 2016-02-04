@@ -1,6 +1,7 @@
 package javaProject.catalogComics.service;
 
 import java.util.Date;
+import java.util.List;
 
 import javaProject.catalogComics.catalog.ComicCatalog;
 import javaProject.catalogComics.catalog.LoanCatalog;
@@ -26,12 +27,16 @@ public class LoanService {
     }
 
     public void saveLoan(Copy copy, People reader) {
+	copy.setStatus(CopyStatus.BORROWED);
+	// Same problem... status..
 	Loan loan = new Loan(new Date(), reader, copy);
 	LoanCatalog.getInstance().save(loan);
     }
 
     public void closeLoan(Loan loan) {
 	loan.setReturned(new Date());
+	// This is possible?
+	loan.getComicCopy().setStatus(CopyStatus.AVAILABLE);
 	LoanCatalog.getInstance().update(loan);
     }
 
@@ -39,4 +44,7 @@ public class LoanService {
 	return LoanCatalog.getInstance().findPendingLoan(username, isbn);
     }
 
+    public List<Loan> finAll() {
+	return LoanCatalog.getInstance().findAll();
+    }
 }

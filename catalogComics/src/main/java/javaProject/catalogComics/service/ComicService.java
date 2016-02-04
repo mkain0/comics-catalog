@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javaProject.catalogComics.catalog.ComicCatalog;
 import javaProject.catalogComics.catalog.GenreCatalog;
+import javaProject.catalogComics.exception.NotAvailableComicException;
 import javaProject.catalogComics.exception.NotFoundException;
 import javaProject.catalogComics.model.Comic;
 import javaProject.catalogComics.model.Copy;
@@ -21,8 +22,13 @@ public class ComicService {
 	return comics;
     }
 
-    public List<Comic> findComicAvailable() {
-	return ComicCatalog.getInstance().findAvailable();
+    public List<Comic> findComicAvailable() throws NotAvailableComicException {
+	List<Comic> comicsAvailable = new ArrayList<Comic>();
+	comicsAvailable = ComicCatalog.getInstance().findAvailable();
+	if (comicsAvailable.isEmpty() || comicsAvailable == null) {
+	    throw new NotAvailableComicException("There is no comics available. Back later.");
+	}
+	return comicsAvailable;
     }
 
     public Comic findComicBy(int isbn) throws NotFoundException {
