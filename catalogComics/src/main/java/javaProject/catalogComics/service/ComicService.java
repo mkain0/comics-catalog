@@ -1,6 +1,7 @@
 package javaProject.catalogComics.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -15,10 +16,12 @@ import javaProject.catalogComics.util.CopyStatus;
 public class ComicService {
 
     public Set<Comic> findComics() {
-	return ComicCatalog.getInstance().findAll();
+	Set<Comic> comics = new HashSet<Comic>();
+	comics = ComicCatalog.getInstance().findAll();
+	return comics;
     }
 
-    public Set<Comic> findComicAvailable() {
+    public List<Comic> findComicAvailable() {
 	return ComicCatalog.getInstance().findAvailable();
     }
 

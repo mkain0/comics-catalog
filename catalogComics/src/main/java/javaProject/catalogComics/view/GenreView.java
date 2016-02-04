@@ -1,5 +1,6 @@
 package javaProject.catalogComics.view;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import javaProject.catalogComics.exception.NotFoundException;
@@ -16,27 +17,26 @@ public class GenreView implements CrudViewTemplate {
     }
 
     @Override
-    public void register() {
-	Scanner scanner = new Scanner(System.in);
+    public void register() throws InputMismatchException {
 	System.out.println("------------------Create Genre------------------");
-	System.out.println("Description: ");
-	String description = scanner.nextLine();
+	System.out.print("Description: ");
+	String description = new Scanner(System.in).next();
 
 	int id = comicService.saveGenre(new Genre(description));
 	System.out.println("Registered Successfully. Genre ID: " + id);
     }
 
     @Override
-    public void modify() {
+    public void modify() throws InputMismatchException {
 	Scanner scanner = new Scanner(System.in);
 	System.out.println("------------------Modify Genre-------------------");
-	System.out.println("Genre ID: ");
+	System.out.print("Genre ID: ");
 	int id = scanner.nextInt();
 	Genre genre;
 	try {
 	    genre = comicService.findGenreBy(id);
-	    System.out.println("Description: ");
-	    genre.setDescription(scanner.nextLine());
+	    System.out.print("Description: ");
+	    genre.setDescription(scanner.next());
 
 	    comicService.updateGenre(genre);
 	} catch (NotFoundException e) {
@@ -45,11 +45,10 @@ public class GenreView implements CrudViewTemplate {
     }
 
     @Override
-    public void delete() {
-	Scanner scanner = new Scanner(System.in);
+    public void delete() throws InputMismatchException {
 	System.out.println("------------------Delete Genre-------------------");
-	System.out.println("Genre ID: ");
-	int id = scanner.nextInt();
+	System.out.print("Genre ID: ");
+	int id = new Scanner(System.in).nextInt();
 	comicService.deleteGenre(id);
     }
 

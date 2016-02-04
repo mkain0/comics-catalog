@@ -39,6 +39,15 @@ public class PeopleCatalog {
 	throw new NotFoundException("The username or password is incorrect.");
     }
 
+    public People findBy(String username) throws NotFoundException {
+	for (People people : peoples) {
+	    if (people.getUsername().equals(username)) {
+		return people;
+	    }
+	}
+	throw new NotFoundException("User not found.");
+    }
+
     public Set<People> findAll() {
 	return peoples;
     }
@@ -55,7 +64,7 @@ public class PeopleCatalog {
 		return people;
 	    }
 	}
-	throw new NotFoundException("People not found.");
+	throw new NotFoundException("User not found.");
     }
 
     public void update(People peopleToUptade) {

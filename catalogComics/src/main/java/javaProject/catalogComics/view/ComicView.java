@@ -1,5 +1,6 @@
 package javaProject.catalogComics.view;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import javaProject.catalogComics.exception.NotFoundException;
@@ -17,43 +18,44 @@ public class ComicView implements CrudViewTemplate {
     }
 
     @Override
-    public void register() {
+    public void register() throws InputMismatchException {
 	Scanner scanner = new Scanner(System.in);
 	System.out.println("------------------Create Comic------------------");
-	System.out.println("Genre ID: ");
+	System.out.print("Genre ID: ");
 	int idGenre = scanner.nextInt();
-	System.out.println("ISBN: ");
+	System.out.print("ISBN: ");
 	int isbn = scanner.nextInt();
-	System.out.println("Title: ");
-	String title = scanner.nextLine();
-	System.out.println("Description: ");
-	String description = scanner.nextLine();
-	System.out.println("Number of copies: ");
+	System.out.print("Title: ");
+	String title = scanner.next();
+	System.out.print("Description: ");
+	String description = scanner.next();
+	System.out.print("Number of copies: ");
 	int quantity = scanner.nextInt();
 	Genre genre;
 	try {
 	    genre = comicService.findGenreBy(idGenre);
 	    comicService.saveComic(new Comic(isbn, title, description, genre), quantity);
+	    System.out.println("Registered Successfully.");
 	} catch (NotFoundException e) {
 	    System.out.println(e.getMessage());
 	}
     }
 
     @Override
-    public void modify() {
+    public void modify() throws InputMismatchException {
 	Scanner scanner = new Scanner(System.in);
 	System.out.println("------------------Modify Comic------------------");
-	System.out.println("ISBN: ");
+	System.out.print("ISBN: ");
 	int isbn = scanner.nextInt();
 	Comic comic;
 	try {
 	    comic = comicService.findComicBy(isbn);
-	    System.out.println("Genre ID: ");
+	    System.out.print("Genre ID: ");
 	    int idGenre = scanner.nextInt();
-	    System.out.println("Title: ");
-	    String title = scanner.nextLine();
-	    System.out.println("Description: ");
-	    String description = scanner.nextLine();
+	    System.out.print("Title: ");
+	    String title = scanner.next();
+	    System.out.print("Description: ");
+	    String description = scanner.next();
 	    Genre genre = comicService.findGenreBy(idGenre);
 	    comicService.updateComic(comic);
 	} catch (NotFoundException e) {
@@ -62,11 +64,10 @@ public class ComicView implements CrudViewTemplate {
     }
 
     @Override
-    public void delete() {
-	Scanner scanner = new Scanner(System.in);
+    public void delete() throws InputMismatchException {
 	System.out.println("------------------Delete Comic------------------");
-	System.out.println("ISBN: ");
-	int isbn = scanner.nextInt();
+	System.out.print("ISBN: ");
+	int isbn = new Scanner(System.in).nextInt();
 	comicService.deleteComic(isbn);
     }
 

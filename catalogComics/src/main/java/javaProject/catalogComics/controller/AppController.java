@@ -19,12 +19,11 @@ public class AppController {
 	int option;
 	do {
 	    menu.forEach(itemMenu -> System.out.println(itemMenu));
-	    Scanner scanner = new Scanner(System.in);
-	    option = scanner.nextInt();
+	    option = new Scanner(System.in).nextInt();
 
 	    switch (option) {
 	    case 1:
-		new ComicService().findComics();
+		new ComicService().findComics().forEach(comic -> System.out.println(comic.toString()));
 		System.out.println("Press enter to return to main menu.");
 		break;
 

@@ -1,11 +1,15 @@
 package javaProject.catalogComics.catalog;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
 import javaProject.catalogComics.exception.NotFoundException;
 import javaProject.catalogComics.model.Comic;
+import javaProject.catalogComics.model.Copy;
 import javaProject.catalogComics.util.CopyStatus;
 
 public class ComicCatalog {
@@ -54,10 +58,17 @@ public class ComicCatalog {
 	return element -> element.getIsbn() == ISBN;
     }
 
-    public Set<Comic> findAvailable() {
+    public List<Comic> findAvailable() {
+	List<Comic> comicsAvailable = new ArrayList<>();
 	for (Comic comic : comics) {
-	    comic.getCopies().stream().filter(copy -> copy.getStatus().equals(CopyStatus.AVAILABLE));
+	    for (Copy copy : comic.getCopies()) {
+		if (copy.getStatus().equals(CopyStatus.AVAILABLE))
+		    ;
+		break;
+	    }
+	    comicsAvailable.add(comic);
 	}
-	return null;
+	Collections.sort(comicsAvailable, (c1, c2) -> c1.getTitle().compareTo(c2.getTitle()));
+	return comicsAvailable;
     }
 }

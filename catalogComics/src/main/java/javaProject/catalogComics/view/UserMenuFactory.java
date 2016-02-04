@@ -1,6 +1,7 @@
 package javaProject.catalogComics.view;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,13 +12,19 @@ import javaProject.catalogComics.service.ComicService;
 public class UserMenuFactory {
 
     public void displayUserMenu(People people) {
-	if (people instanceof User) {
-	    this.userMenu();
+	try {
+	    if (people instanceof User) {
+		this.userMenu();
+	    } else {
+		this.adminMenu();
+	    }
+	} catch (InputMismatchException e) {
+	    System.out.println("Take care! Look what you press.");
+	    this.displayUserMenu(people);
 	}
-	this.adminMenu();
     }
 
-    private void userMenu() {
+    private void userMenu() throws InputMismatchException {
 	List<String> menu = new ArrayList<String>();
 	menu.add("-------------------User Menu--------------------");
 	menu.add("1- View collection of comics");
@@ -51,13 +58,14 @@ public class UserMenuFactory {
 	} while (option != 3);
     }
 
-    private void adminMenu() {
+    private void adminMenu() throws InputMismatchException {
 	List<String> menu = new ArrayList<String>();
 	menu.add("----------------Admin Dashboard-----------------");
 	menu.add("1- Collection of Comics");
 	menu.add("2- Genres");
 	menu.add("3- Users Panel");
-	menu.add("4- Exit");
+	menu.add("4- Loans");
+	menu.add("5- Exit");
 	menu.add("Option: ");
 	int option;
 	do {
@@ -73,6 +81,10 @@ public class UserMenuFactory {
 		break;
 
 	    case 4:
+		new LoanView().close();
+		break;
+
+	    case 5:
 		System.out.println("Goodbye.");
 		break;
 
@@ -80,10 +92,10 @@ public class UserMenuFactory {
 		System.out.println("Wrong option, try again.");
 		break;
 	    }
-	} while (option != 4);
+	} while (option != 5);
     }
 
-    private void createCrudMenu(int type) {
+    private void createCrudMenu(int type) throws InputMismatchException {
 	CrudViewTemplate crudController = new CrudMenuFactory().displayCrudMenu(type);
 	List<String> menu = new ArrayList<String>();
 	menu.add(crudController.getTitle());

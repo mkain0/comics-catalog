@@ -1,6 +1,7 @@
 package javaProject.catalogComics.view;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import javaProject.catalogComics.exception.NotFoundException;
@@ -18,17 +19,17 @@ public class UserView implements CrudViewTemplate {
     }
 
     @Override
-    public void register() {
+    public void register() throws InputMismatchException {
 	Scanner scanner = new Scanner(System.in);
 	System.out.println("------------------Create User-------------------");
-	System.out.println("First name: ");
-	String firstName = scanner.nextLine();
-	System.out.println("Last name: ");
-	String lastName = scanner.nextLine();
-	System.out.println("Username: ");
-	String username = scanner.nextLine();
-	System.out.println("Password: ");
-	String password = scanner.nextLine();
+	System.out.print("First name: ");
+	String firstName = scanner.next();
+	System.out.print("Last name: ");
+	String lastName = scanner.next();
+	System.out.print("Username: ");
+	String username = scanner.next();
+	System.out.print("Password: ");
+	String password = scanner.next();
 	try {
 	    int id = peopleService.save(new User(username, password, lastName, firstName));
 	    System.out.println("Registered Successfully. User ID: " + id);
@@ -38,22 +39,22 @@ public class UserView implements CrudViewTemplate {
     }
 
     @Override
-    public void modify() {
+    public void modify() throws InputMismatchException {
 	Scanner scanner = new Scanner(System.in);
 	System.out.println("------------------Modify User-------------------");
-	System.out.println("User ID: ");
+	System.out.print("User ID: ");
 	int id = scanner.nextInt();
 	People people;
 	try {
 	    people = peopleService.findBy(id);
-	    System.out.println("First name: ");
-	    people.setFirstName(scanner.nextLine());
-	    System.out.println("Last name: ");
-	    people.setLastName(scanner.nextLine());
-	    System.out.println("Username: ");
-	    people.setUsername(scanner.nextLine());
-	    System.out.println("Password: ");
-	    people.setPassword(scanner.nextLine());
+	    System.out.print("First name: ");
+	    people.setFirstName(scanner.next());
+	    System.out.print("Last name: ");
+	    people.setLastName(scanner.next());
+	    System.out.print("Username: ");
+	    people.setUsername(scanner.next());
+	    System.out.print("Password: ");
+	    people.setPassword(scanner.next());
 	    peopleService.update(people);
 	} catch (NotFoundException e) {
 	    System.out.println(e.getMessage());
@@ -61,11 +62,10 @@ public class UserView implements CrudViewTemplate {
     }
 
     @Override
-    public void delete() {
-	Scanner scanner = new Scanner(System.in);
+    public void delete() throws InputMismatchException {
 	System.out.println("------------------Delete User-------------------");
-	System.out.println("User ID: ");
-	int id = scanner.nextInt();
+	System.out.print("User ID: ");
+	int id = new Scanner(System.in).nextInt();
 	peopleService.delete(id);
     }
 

@@ -1,6 +1,7 @@
 package javaProject.catalogComics.view;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 
 public interface CrudViewTemplate {
@@ -18,11 +19,11 @@ public interface CrudViewTemplate {
 
     String getTitle();
 
-    void register();
+    void register() throws InputMismatchException;
 
-    void modify();
+    void modify() throws InputMismatchException;
 
-    void delete();
+    void delete() throws InputMismatchException;
 
     void viewAll();
 

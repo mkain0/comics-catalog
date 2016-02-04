@@ -1,9 +1,6 @@
 package javaProject.catalogComics;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -13,40 +10,38 @@ import javaProject.catalogComics.exception.NotFoundException;
 import javaProject.catalogComics.model.Admin;
 import javaProject.catalogComics.model.People;
 
-public class PeopleTest {
+public class PeopleCatalogTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-	PeopleCatalog.getInstance().save(new Admin("Sheldon", "Bazinga", "Sheldon", "Cooper"));
+	PeopleCatalog.getInstance().findAll().add(new Admin(7, "Bruce",
+		"259dce1261c779a4fcdc2a42f4a6ee981fc7d819c7ee6462d8896c152ebf990a", "Bruce", "Wayne"));
     }
 
     @Test
     public void register() {
-	assertEquals(1, PeopleCatalog.getInstance().save(new Admin("Sheldon", "Bazinga", "Sheldon", "Cooper")));
+	assertEquals(1, PeopleCatalog.getInstance().save(new Admin("Sheldon",
+		"259dce1261c779a4fcdc2a42f4a6ee981fc7d819c7ee6462d8896c152ebf990a", "Sheldon", "Cooper")));
     }
 
     @Test
     public void modify() throws NotFoundException {
-	People people = PeopleCatalog.getInstance().findBy(1);
+	People people = PeopleCatalog.getInstance().findBy(7);
 	people.setFirstName("Paul");
 	PeopleCatalog.getInstance().update(people);
-	assertEquals("Paul", PeopleCatalog.getInstance().findBy(1).getFirstName());
+	assertEquals("Paul", PeopleCatalog.getInstance().findBy(7).getFirstName());
     }
 
     @Test(expected = NotFoundException.class)
     public void peopleNotFoundException() throws NotFoundException {
-	People people = PeopleCatalog.getInstance().findBy(2);
-	assertEquals(2, people.getId());
+	People people = PeopleCatalog.getInstance().findBy(4);
+	assertEquals(4, people.getId());
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void delete() throws NotFoundException {
-	fail("Not implemented yet");
-    }
-
-    @Test
-    public void list() {
-	assertEquals(new ArrayList<People>(), PeopleCatalog.getInstance().findAll());
+	PeopleCatalog.getInstance().delete(1);
+	PeopleCatalog.getInstance().findBy(1);
     }
 
 }
