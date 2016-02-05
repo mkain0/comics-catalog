@@ -6,6 +6,7 @@ import java.util.Set;
 import javaProject.catalogComics.catalog.LoanCatalog;
 import javaProject.catalogComics.catalog.PeopleCatalog;
 import javaProject.catalogComics.exception.CanNotDeleteException;
+import javaProject.catalogComics.exception.DuplicateUsernameException;
 import javaProject.catalogComics.exception.NotFoundException;
 import javaProject.catalogComics.model.People;
 import javaProject.catalogComics.model.User;
@@ -25,8 +26,11 @@ public class PeopleService {
 	return PeopleCatalog.getInstance().findBy(id);
     }
 
-    public int save(User user) throws NoSuchAlgorithmException {
+    public int save(User user) throws NoSuchAlgorithmException, DuplicateUsernameException {
 	user.setPassword(Encryption.encrypted(user.getPassword()));
+	if (PeopleCatalog.getInstance().isRegister(user)) {
+	    throw new DuplicateUsernameException("Username already taken.");
+	}
 	return PeopleCatalog.getInstance().save(user);
     }
 

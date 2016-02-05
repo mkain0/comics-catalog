@@ -5,6 +5,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import javaProject.catalogComics.exception.CanNotDeleteException;
+import javaProject.catalogComics.exception.DuplicateUsernameException;
 import javaProject.catalogComics.exception.NotFoundException;
 import javaProject.catalogComics.model.People;
 import javaProject.catalogComics.model.User;
@@ -34,6 +35,8 @@ public class UserView implements CrudViewTemplate {
 	try {
 	    int id = peopleService.save(new User(username, password, lastName, firstName));
 	    System.out.println("Registered Successfully. User ID: " + id);
+	} catch (DuplicateUsernameException e) {
+	    System.out.println(e.getMessage());
 	} catch (NoSuchAlgorithmException e) {
 	    System.out.println("An error occurred.\n");
 	}

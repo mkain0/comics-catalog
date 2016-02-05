@@ -86,4 +86,10 @@ public class PeopleCatalog {
 	return element -> element.getId() == id;
     }
 
+    public boolean isRegister(People user) {
+	return PeopleCatalog.getInstance().findAll().stream().anyMatch(people -> {
+	    return people.getUsername().equals(user.getUsername());
+	});
+    }
+
 }
