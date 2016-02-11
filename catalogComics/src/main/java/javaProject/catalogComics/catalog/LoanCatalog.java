@@ -58,7 +58,7 @@ public class LoanCatalog {
 
     public boolean hasAnyPendingLoan(int id) {
 	return LoanCatalog.getInstance().findAll().stream().anyMatch(loan -> {
-	    if (loan.getReturned() == null) {
+	    if (loan.getReturned() == null && loan.getReader().getId() == id) {
 		return false;
 	    } else {
 		return true;
